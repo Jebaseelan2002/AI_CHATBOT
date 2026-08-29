@@ -9,9 +9,12 @@ from .config import FRONTEND_ORIGIN
 
 app = FastAPI(title="LangChain MongoDB Chatbot API")
 
+allowed_origins = [FRONTEND_ORIGIN] if FRONTEND_ORIGIN else []
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[FRONTEND_ORIGIN],
+    allow_origins=allowed_origins,
+    allow_origin_regex=r"https?://(localhost|127\.0\.0\.1)(:\d+)?",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
